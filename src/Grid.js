@@ -12,19 +12,64 @@ class Grid extends React.Component {
     this.canvasRef = React.createRef();
 
     this.state = {
+      // TODO: Should these be in this.state since they never change?
       canvasWidth: 500,
       canvasHeight: 500,
       nrows: props.nrows,
       ncols: props.ncols,
+
       cells: Array(props.nrows).fill().map(()=>Array(props.ncols).fill(false)),
     };
 
     // TODO: Understand why binding is needed here?
     this.onCanvasClick = this.onCanvasClick.bind(this);
+    this.stepGeneration = this.stepGeneration.bind(this);
   }
 
-  // TOOD: This will trigger a React re-render. 
-  //  Support batch updates to minimize re-renders. 
+  isValidCoordinate(row, col) {
+    return (row > 0 && row < this.state.nrows && col > 0 && col < this.state.ncols);
+  }
+
+  countLiveNeighbours(cells, row, col) {
+    var count = 0;
+    const steps = [-1, 0, 1];
+    for (var i = 0; i < steps.length; i++) {
+      for (var j = 0; j < steps.length; j++) {
+        const nRow = row + steps[i];
+        const nCol = col + steps[j];
+        if (this.isValidCoordinate(nRow, nCol) && cells[nRow][nCol]) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  stepGeneration() {
+    const cells = this.state.cells;
+    const updatedCells = [...this.state.cells];;
+
+    for (var row = 0; row < cells.length; row++) {
+      for (var col = 0; col < cells[row].length; col++) {
+        const isAlive = cells[row][col];
+        const liveNeighbours = this.countLiveNeighbours(cells, row, col);
+        var nextGenState = false;
+        if (isAlive) {
+          if (liveNeighbours === 2 || liveNeighbours === 3) {
+            nextGenState = true;
+          }
+        } else if (liveNeighbours === 3) {
+          nextGenState = true;
+        }
+        updatedCells[row][col] = nextGenState;
+      }
+    }
+
+    this.setState({
+      cells: updatedCells,
+    });
+  }
+
   toggleCell(row, col) {
     const updatedCells = [...this.state.cells];
     updatedCells[row][col] = !updatedCells[row][col];
@@ -66,8 +111,8 @@ class Grid extends React.Component {
 
     for (var row = 0; row < this.state.cells.length; row++) {
       for (var col = 0; col < this.state.cells[row].length; col++) {
-        const cell = this.state.cells[row][col];
-        if (cell) {
+        const isAlive = this.state.cells[row][col];
+        if (isAlive) {
           ctx.fillStyle = CELL_ON_COLOR;
         } else {
           ctx.fillStyle = CELL_OFF_COLOR;
@@ -86,6 +131,10 @@ class Grid extends React.Component {
           width={this.state.canvasWidth} 
           height={this.state.canvasHeight} 
           onClick={this.onCanvasClick}/>
+        <br/>
+        <button
+          className="play-button"
+          onClick={this.stepGeneration}/>
       </div>
     );
   }
