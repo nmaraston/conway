@@ -13,8 +13,8 @@ class Grid extends React.Component {
 
     this.state = {
       // TODO: Should these be in this.state since they never change?
-      canvasWidth: 500,
-      canvasHeight: 500,
+      canvasWidth: 1000,
+      canvasHeight: 1000,
       nrows: props.nrows,
       ncols: props.ncols,
 
@@ -27,7 +27,7 @@ class Grid extends React.Component {
   }
 
   isValidCoordinate(row, col) {
-    return (row > 0 && row < this.state.nrows && col > 0 && col < this.state.ncols);
+    return (row >= 0 && row < this.state.nrows && col >= 0 && col < this.state.ncols);
   }
 
   countLiveNeighbours(cells, row, col) {
@@ -37,23 +37,37 @@ class Grid extends React.Component {
       for (var j = 0; j < steps.length; j++) {
         const nRow = row + steps[i];
         const nCol = col + steps[j];
+
+
+        if (nRow === row && nCol === col) {
+          continue;
+        }
+
         if (this.isValidCoordinate(nRow, nCol) && cells[nRow][nCol]) {
+          if (row === 1 && col === 2) {
+            console.log(`(${nRow}, ${nCol})`);
+          }
           count++;
         }
       }
+    }
+    if (row === 1 && col === 2) {
+      console.log(`${count}`);
     }
     return count;
   }
 
   stepGeneration() {
     const cells = this.state.cells;
-    const updatedCells = [...this.state.cells];;
+    const updatedCells = cells.map(row => row.slice());
 
     for (var row = 0; row < cells.length; row++) {
       for (var col = 0; col < cells[row].length; col++) {
         const isAlive = cells[row][col];
         const liveNeighbours = this.countLiveNeighbours(cells, row, col);
-        var nextGenState = false;
+
+
+        let nextGenState = false;
         if (isAlive) {
           if (liveNeighbours === 2 || liveNeighbours === 3) {
             nextGenState = true;

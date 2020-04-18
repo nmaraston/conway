@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <Grid nrows={20} ncols={20}/>
+      <Grid nrows={100} ncols={100}/>
     </div>
   );
 }
