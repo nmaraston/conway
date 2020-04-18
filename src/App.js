@@ -5,7 +5,8 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <Grid nrows={100} ncols={100}/>
+      <h1>Conway's Game of Life</h1>
+      <Grid nrows={10} ncols={10}/>
     </div>
   );
 }

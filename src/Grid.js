@@ -1,5 +1,6 @@
 import React from 'react';
 import './Grid.css';
+import {ReactComponent as PlayBtnIcon} from './play_btn.svg';
 
 const CELL_ON_COLOR = 'rgba(0, 0, 0, 0.5)';
 const CELL_OFF_COLOR = 'rgba(200, 200, 200, 0.5)';
@@ -139,16 +140,13 @@ class Grid extends React.Component {
   render() {
     return (
       <div className="grid">
-        <h1>Canvas</h1>
         <canvas id="canvas" 
           ref={this.canvasRef}
           width={this.state.canvasWidth} 
           height={this.state.canvasHeight} 
           onClick={this.onCanvasClick}/>
         <br/>
-        <button
-          className="play-button"
-          onClick={this.stepGeneration}/>
+        <PlayBtnIcon className="playBut" onClick={this.stepGeneration}/>
       </div>
     );
   }
