@@ -1,6 +1,6 @@
 import React from 'react';
 import './Grid.css';
-import {ReactComponent as PlayBtnIcon} from './play_btn.svg';
+import PlayBtnIcon from './play_btn.svg';
 
 const CELL_ON_COLOR = 'rgba(0, 0, 0, 0.5)';
 const CELL_OFF_COLOR = 'rgba(200, 200, 200, 0.5)';

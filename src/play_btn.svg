@@ -1,3 +1,10 @@
-<svg version="1.1" x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7">
-  <polygon class='triangle' id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points=" 73.5,62.5 148.5,105.8 73.5,149.1 "/>
+<svg version="1.1" x="0px" y="0px" width="200px" height="200px" viewBox="0 0 200 200" enable-background="new 0 0 200 200">
+  <polygon
+    class='triangle' 
+    fill="#000" 
+    stroke-width="7" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    stroke-miterlimit="10" 
+    points=" 73.5,62.5 148.5,105.8 73.5,149.1 "/>
 </svg>
